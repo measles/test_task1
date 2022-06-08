@@ -1,11 +1,18 @@
-def days_till_the_next_month(month: int, day: int) -> int:
+def february_days(year):
+    is_leap = True if year % 400 == 0 or (year % 4  == 0 and year % 100 != 0) else False
+    if is_leap:
+        number = 29
+    else:
+        number = 28
+
+def days_till_the_next_month(year: int, month: int, day: int) -> int:
     long = (1,3,5,6,8,10,12)
     day_in_month = 0
     
     if month in long:
         days_in_month = 31
     else:
-        days_in_month = 30 if month != 2 else 28
+        days_in_month = 30 if month != 2 else february_days(year)
         
     return days_in_month - day 
 
@@ -21,7 +28,7 @@ def add(date: str, number_of_days: int) -> int:
         number_of_days = number_of_days % 365
     
     while number_of_days:
-        till_next = days_till_the_next_month(date_dict["month"], date_dict["day"])
+        till_next = days_till_the_next_month(date_dict["year"], date_dict["month"], date_dict["day"])
         if number_of_days > till_next:
             date_dict["month"] += 1
             date_dict["day"] = 1
